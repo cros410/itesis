@@ -6,7 +6,11 @@ const ctlIndex = require("../controllers/index");
 index.route("/login")
   .post(ctlIndex.login);
 
-  index.route("/alltesis")
+index.route("/alltesis")
   .get(ctlIndex.getTesis);
+
+index.route("/infoUser")
+  .post(ctlIndex.getInfoUser);
+
 
 module.exports = index;

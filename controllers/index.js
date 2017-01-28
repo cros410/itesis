@@ -38,15 +38,12 @@ function login(req, res) {
                     res.send({ cod: 2, msg: "Credenciales no válidas" });
                 }
             }
-        })
-
-
-
+        });
     /*if (user.user && user.pwd) {
-        res.status(200).send({ token: auth.createToken(user), name: "Christian" });
-    } else {
-        res.status(200).send({ cod: 2, msg: "Completar datos" });
-    }*/
+       res.status(200).send({ token: auth.createToken(user), name: "Christian" });
+   } else {
+       res.status(200).send({ cod: 2, msg: "Completar datos" });
+   }*/
 }
 
 function getTesis(req, res) {
@@ -60,7 +57,37 @@ function getTesis(req, res) {
         });
 }
 
+function getInfoUser(req, res) {
+    let user = req.body;
+    db.itesis.aggregate(
+        { $unwind: '$alumnos' },
+        { $match: { 'alumnos.cod': user.cod } },
+        {
+            $group: {
+                _id: '$_id', user: {
+                    $push: {
+                        name: '$alumnos.name',
+                        lastname: '$alumnos.lastname',
+                        fac: '$alumnos.fac'
+                    }
+                }
+            }
+        },
+        function (err, docs) {
+            if (err) {
+                res.send(err);
+            } else {
+                if (docs.length > 0) {
+                    res.send({ cod: 1, type: docs[0].user[0] });
+                } else {
+                    res.send({ cod: 2, msg: "Usuario no valido" });
+                }
+            }
+        });
+}
+
 module.exports = {
     login,
-    getTesis
+    getTesis,
+    getInfoUser
 }
