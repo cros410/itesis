@@ -12,5 +12,8 @@ index.route("/alltesis")
 index.route("/infoUser")
   .post(ctlIndex.getInfoUser);
 
+index.route("/changePwd")
+  .post(ctlIndex.changePassword);
+
 
 module.exports = index;

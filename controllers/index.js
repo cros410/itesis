@@ -86,8 +86,38 @@ function getInfoUser(req, res) {
         });
 }
 
+function changePassword(req, res) {
+    let pwd = req.body.pwd;
+    let cod = req.body.cod;
+    let npwd = req.body.npwd;
+
+    console.log(cod);
+    console.log(pwd);
+    console.log(npwd);
+
+    db.itesis.update({ "usuarios.cod": cod  , "usuarios.pwd": pwd  },
+        {
+            $set: {
+                "usuarios.$.pwd": npwd
+            }
+        }, function (err, result) {
+            if (err) {
+                res.send(err);
+            } else {
+                if(result.nModified===1){
+                    res.send({cod:1, msg:"Actualizado con exito"});
+                }else{
+                    res.send({cod:2, msg:"Datos incorrectos"});
+                }
+                
+            }
+        });
+
+}
+
 module.exports = {
     login,
     getTesis,
-    getInfoUser
+    getInfoUser,
+    changePassword
 }
