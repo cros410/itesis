@@ -78,7 +78,7 @@ function getInfoUser(req, res) {
                 res.send(err);
             } else {
                 if (docs.length > 0) {
-                    res.send({ cod: 1, type: docs[0].user[0] });
+                    res.send({ cod: 1, user: docs[0].user[0] });
                 } else {
                     res.send({ cod: 2, msg: "Usuario no valido" });
                 }
