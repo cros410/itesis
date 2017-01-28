@@ -15,5 +15,7 @@ index.route("/infoUser")
 index.route("/changePwd")
   .post(ctlIndex.changePassword);
 
+index.route("/test")
+  .get(ctlIndex.test);
 
 module.exports = index;
