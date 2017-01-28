@@ -27,13 +27,13 @@ function login(req, res) {
     db.itesis.aggregate(
         { $unwind: '$usuarios' },
         { $match: { 'usuarios.cod': user.cod, 'usuarios.pwd': user.pwd } },
-        { $group: { _id: '$_id', user: { $push: { cod: '$usuarios.cod', pwd: '$usuarios.pwd' , type: '$usuarios.type' } } } },
+        { $group: { _id: '$_id', user: { $push: { cod: '$usuarios.cod', pwd: '$usuarios.pwd', type: '$usuarios.type' } } } },
         function (err, docs) {
             if (err) {
                 res.send(err);
             } else {
                 if (docs.length > 0) {
-                    res.send({ cod: 1, msg: "Usuario autorizado" , type:docs[0].user[0].type });
+                    res.send({ cod: 1, msg: "Usuario autorizado", type: docs[0].user[0].type });
                 } else {
                     res.send({ cod: 2, msg: "Credenciales no válidas" });
                 }
@@ -50,7 +50,14 @@ function login(req, res) {
 }
 
 function getTesis(req, res) {
-    
+    db.itesis.find({}, { tesis: 1, _id: 0 },
+        function (err, docs) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(docs[0]);
+            }
+        });
 }
 
 module.exports = {
