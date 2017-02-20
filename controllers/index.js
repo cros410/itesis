@@ -135,6 +135,29 @@ function changePassword(req, res) {
 
 }
 
+function addTesis(req, res) {
+    let tes = req.body;
+    tes.ststus = 1;
+    db.itesis.update({ _id: mongojs.ObjectId('588b8369734d1d20b6680265') },
+        {
+            $push: {
+                tesis: tes
+            }
+        }, function (err, result) {
+            if (err) {
+                res.send({
+                    cod : 0 ,
+                    msg : "Error agregar tesis"
+                });
+            } else {
+                res.send({
+                    cod : 1 ,
+                    msg : "Tesis agregada con éxito"
+                });
+            }
+        });
+}
+
 function test(req, res) {
     db.itesis.aggregate(
         { $unwind: '$usuarios' },
@@ -178,5 +201,6 @@ module.exports = {
     getTesis,
     getInfoUser,
     changePassword,
+    addTesis,
     test
 }

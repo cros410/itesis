@@ -15,6 +15,9 @@ index.route("/infoUser")
 index.route("/changePwd")
   .post(ctlIndex.changePassword);
 
+  index.route("/addTesis")
+  .post(ctlIndex.addTesis);
+
 index.route("/test")
   .get(ctlIndex.test);
 
