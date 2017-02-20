@@ -146,14 +146,25 @@ function addTesis(req, res) {
         }, function (err, result) {
             if (err) {
                 res.send({
-                    cod : 0 ,
-                    msg : "Error agregar tesis"
+                    cod: 0,
+                    msg: "Error agregar tesis"
                 });
             } else {
                 res.send({
-                    cod : 1 ,
-                    msg : "Tesis agregada con éxito"
+                    cod: 1,
+                    msg: "Tesis agregada con éxito"
                 });
+            }
+        });
+}
+
+function getAsesores(req, res) {
+    db.itesis.find({}, { docentes: 1, _id: 0 },
+        function (err, docs) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(docs[0]);
             }
         });
 }
@@ -202,5 +213,6 @@ module.exports = {
     getInfoUser,
     changePassword,
     addTesis,
+    getAsesores,
     test
 }

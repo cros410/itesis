@@ -15,10 +15,16 @@ index.route("/infoUser")
 index.route("/changePwd")
   .post(ctlIndex.changePassword);
 
-  index.route("/addTesis")
+index.route("/addTesis")
   .post(ctlIndex.addTesis);
+
+index.route("/getDocentes")
+  .get(ctlIndex.getAsesores);
+
 
 index.route("/test")
   .get(ctlIndex.test);
+
+
 
 module.exports = index;
