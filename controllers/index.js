@@ -21,7 +21,8 @@ function login(req, res) {
                         pwd: '$usuarios.pwd',
                         type: '$usuarios.type',
                         name: "$alumnos.name",
-                        lastname: "$alumnos.lastname"
+                        lastname: "$alumnos.lastname",
+                        docente: "$alumnos.docente"
                     }
                 }
             }
@@ -36,7 +37,8 @@ function login(req, res) {
                         cod: 1,
                         msg: "Usuario autorizado",
                         type: docs[0].user[0].type,
-                        fullname: fullname
+                        fullname: fullname,
+                        docente: docs[0].user[0].docente
                     });
                 } else {
                     res.send({ cod: 2, msg: "Credenciales no válidas" });
