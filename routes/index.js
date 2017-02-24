@@ -27,6 +27,10 @@ index.route("/addAsesor")
 index.route("/test")
   .get(ctlIndex.test);
 
+index.route("/")
+  .get(ctlIndex.indexRequest);
+
+
 
 
 module.exports = index;
