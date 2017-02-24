@@ -118,7 +118,7 @@ function changePassword(req, res) {
 
 function addTesis(req, res) {
     let tes = req.body;
-    tes.ststus = 2;
+    tes.status = 2;
     db.itesis.update({ _id: mongojs.ObjectId('588b8369734d1d20b6680265') },
         {
             $push: {
