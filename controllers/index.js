@@ -92,10 +92,6 @@ function changePassword(req, res) {
     let cod = req.body.cod;
     let npwd = req.body.npwd;
 
-    console.log(cod);
-    console.log(pwd);
-    console.log(npwd);
-
     db.itesis.update({ "usuarios.cod": cod, "usuarios.pwd": pwd },
         {
             $set: {
@@ -150,6 +146,51 @@ function getAsesores(req, res) {
         });
 }
 
+function addAsesor(req, res) {
+    let cod = req.body.codalum;
+    let status = req.body.status;
+    let asesor = req.body.asesor;
+    let name = req.body.name;
+
+
+    db.itesis.update({ "tesis.alumno": cod },
+        {
+            $set: {
+                "tesis.$.status": status
+            }
+        }, function (err, result) {
+            if (err) {
+                res.send(err);
+            } else {
+                if (result.nModified === 1) {
+                    db.itesis.update({ "alumnos.cod": cod },
+                        {
+                            $set: {
+                                "alumnos.$.docente.asesor": {
+                                    name: asesor,
+                                    cod: name
+                                }
+                            }
+                        }, function (err, result) {
+                            if (err) {
+                                res.send(err);
+                            } else {
+                                if (result.nModified === 1) {
+                                    res.send({ cod: 1, msg: "Actualizado con exito" });
+                                } else {
+                                    res.send({ cod: 2, msg: "Datos incorrectos 2" });
+                                }
+
+                            }
+                        });
+                } else {
+                    res.send({ cod: 2, msg: "Datos incorrectos 1" });
+                }
+
+            }
+        });
+}
+
 function test(req, res) {
     db.itesis.aggregate(
         { $unwind: '$usuarios' },
@@ -195,5 +236,6 @@ module.exports = {
     changePassword,
     addTesis,
     getAsesores,
+    addAsesor,
     test
 }

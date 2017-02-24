@@ -21,6 +21,8 @@ index.route("/addTesis")
 index.route("/getDocentes")
   .get(ctlIndex.getAsesores);
 
+index.route("/addAsesor")
+  .post(ctlIndex.addAsesor);
 
 index.route("/test")
   .get(ctlIndex.test);
